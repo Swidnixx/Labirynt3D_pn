@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float speed = 10;
 
+    private float verticalSpeed = 0;
+    private bool isGrounded;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -18,6 +21,14 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         GroundCheck();
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.CompareTag("Pickup"))
+        {
+            hit.gameObject.GetComponent<Pickup>().Collect();
+        }
     }
 
     void GroundCheck()
@@ -33,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
         if(isHit)
         {
+            isGrounded = true;
+
             switch(hit.collider.tag)
             {
                 case "GroundFast":
@@ -48,6 +61,10 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+        else
+        {
+            isGrounded = false;
+        }
     }
 
     void Movement()
@@ -57,5 +74,17 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveVector = transform.forward * z + transform.right * x;
         controller.Move(moveVector * Time.deltaTime * speed);
+
+        //new
+        if (isGrounded)
+        {
+            verticalSpeed = 0;
+        }
+        else
+        {
+            verticalSpeed -= 10 * Time.deltaTime; 
+            if (verticalSpeed < -30) verticalSpeed = -30;
+        }
+        controller.Move(new Vector3(0, verticalSpeed * Time.deltaTime, 0));
     }
 }
