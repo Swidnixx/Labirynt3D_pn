@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PortalTeleport : MonoBehaviour
 {
-    [SerializeField] Transform player;
-    [SerializeField] Transform receiver;
+    [HideInInspector]
+    public Transform player;
+    [HideInInspector]
+    public Transform receiver;
 
     bool playerOverlapping;
 

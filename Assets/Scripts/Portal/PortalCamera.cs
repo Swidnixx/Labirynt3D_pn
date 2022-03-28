@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PortalCamera : MonoBehaviour
 {
+    [HideInInspector]
     public PortalCamera linkedPortalCamera;
     public MeshRenderer renderPlane;
     Camera playerCamera;
@@ -17,6 +18,8 @@ public class PortalCamera : MonoBehaviour
         portalParent = transform.parent;
         playerCamera = Camera.main;
         portalCamera = GetComponent<Camera>();
+
+        portalCamera.enabled = false;
     }
 
     void Start()
@@ -26,10 +29,15 @@ public class PortalCamera : MonoBehaviour
 
     void Update()
     {
+        renderPlane.enabled = false;
+
         Matrix4x4 m = portalParent.localToWorldMatrix *
             linkedPortalCamera.portalParent.worldToLocalMatrix *
             playerCamera.transform.localToWorldMatrix;
         transform.SetPositionAndRotation(m.GetColumn(3), m.rotation);
+
+        portalCamera.Render();
+        renderPlane.enabled = true;
     }
 
     void CreateRenderTexture()
