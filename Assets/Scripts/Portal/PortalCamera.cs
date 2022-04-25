@@ -19,7 +19,7 @@ public class PortalCamera : MonoBehaviour
         playerCamera = Camera.main;
         portalCamera = GetComponent<Camera>();
 
-        portalCamera.enabled = false;
+        //portalCamera.enabled = false;
     }
 
     void Start()
@@ -36,7 +36,7 @@ public class PortalCamera : MonoBehaviour
             playerCamera.transform.localToWorldMatrix;
         transform.SetPositionAndRotation(m.GetColumn(3), m.rotation);
 
-        portalCamera.Render();
+        //portalCamera.Render();
         renderPlane.enabled = true;
     }
 

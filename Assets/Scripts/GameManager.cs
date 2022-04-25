@@ -14,9 +14,13 @@ public class GameManager : MonoBehaviour
 
     // Statistics
     private int points = 0;
+
     private int redKeys = 0;
+    public int RedKeys { get { return redKeys; } set { redKeys = value; } }
     private int greenKeys = 0;
+    public int GreenKeys { get { return greenKeys; } set { greenKeys = value; } }
     private int goldenKeys = 0;
+    public int GoldenKeys { get { return goldenKeys; } set { goldenKeys = value; } }
 
     private void Awake()
     {

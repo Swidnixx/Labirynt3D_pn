@@ -1153,6 +1153,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1286811862}
   - component: {fileID: 1286811861}
+  - component: {fileID: 1286811863}
+  - component: {fileID: 1286811864}
   m_Layer: 0
   m_Name: LockMechanim
   m_TagString: Untagged
@@ -1195,6 +1197,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286811863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286811860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8921a72f222d1b4baf1310d1ab9fac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doors:
+  - {fileID: 1320205185}
+  keyTypeForThisLock: 1
+--- !u!65 &1286811864
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286811860}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.0043583, y: 1, z: 4.5407295}
+  m_Center: {x: 0.10831928, y: 0, z: -2.8799}
 --- !u!4 &1307333492
 Transform:
   m_ObjectHideFlags: 0
@@ -1242,7 +1272,6 @@ MonoBehaviour:
   openPos: {fileID: 1651320664}
   closedPos: {fileID: 2061457434}
   speed: 1
-  open: 0
 --- !u!4 &1320205186
 Transform:
   m_ObjectHideFlags: 0
@@ -2038,7 +2067,6 @@ GameObject:
   - component: {fileID: 2063302712}
   - component: {fileID: 2063302715}
   - component: {fileID: 2063302714}
-  - component: {fileID: 2063302713}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2060,19 +2088,6 @@ Transform:
   m_Father: {fileID: 1286811862}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2063302713
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063302711}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2063302714
 MeshRenderer:
   m_ObjectHideFlags: 0
