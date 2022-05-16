@@ -18,15 +18,17 @@ public class LevelGenerator : MonoBehaviour
             for(int z = 0; z < map.height; z++)
             {
                 CreatePixel(x, z);
+ 
             }
         }
+
     }
 
     private void CreatePixel(int x, int z)
     {
         Color color = map.GetPixel(x, z);
-
-        foreach(ColorMapping mapping in mappings)
+        Debug.Log(color);
+        foreach (ColorMapping mapping in mappings)
         {
             if(mapping.color.Equals(color))
             {
