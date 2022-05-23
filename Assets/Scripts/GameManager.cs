@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
     // Statistics
     private int points = 0;
 
+    // Sounds
+    public AudioSource audioSource;
+    public AudioClip gamePausedClip;
+    public AudioClip pickUpClip;
+    public AudioClip loseClip;
+
     private int redKeys = 0;
     public int RedKeys { get { return redKeys; } set { redKeys = value; } }
     private int greenKeys = 0;
@@ -39,10 +45,16 @@ public class GameManager : MonoBehaviour
         InvokeRepeating(nameof(StopperTick), 3, 1);
     }
 
+    public void PlayClip(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
     void Update()
     {
         if(Input.GetButtonDown("Cancel"))
         {
+            PlayClip(gamePausedClip);
             if(gamePaused)
             {
                 //unpause
@@ -75,29 +87,34 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         CancelInvoke(nameof(StopperTick));
+        PlayClip(loseClip);
         Debug.Log("Game ended");
     }
 
     #region Pickups Helper Methods
     public void AddPoints(int pointsToAdd)
     {
+        PlayClip(pickUpClip);
         points += pointsToAdd;
     }
 
     public void AddTime(int timeToAdd)
     {
+        PlayClip(pickUpClip);
         timeLeft += timeToAdd;
     }
 
     public void TimeFreeze(int time)
     {
+        PlayClip(pickUpClip);
         CancelInvoke("StopperTick");
         InvokeRepeating("StopperTick", time, 1);
     }
 
     public void AddKey(KeyType type)
     {
-        switch(type)
+        PlayClip(pickUpClip);
+        switch (type)
         {
             case KeyType.Red:
                 redKeys++;
