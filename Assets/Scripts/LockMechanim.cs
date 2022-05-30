@@ -42,7 +42,7 @@ public class LockMechanim : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Debug.Log("Lock in Range");
+            GameManager.instance.infoText.text = "Press E to unlock";
             playerInRange = true;
         }
     }
@@ -51,7 +51,7 @@ public class LockMechanim : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Lock out of Range");
+            GameManager.instance.infoText.text = "";
             playerInRange = false;
         }
     }
@@ -64,6 +64,7 @@ public class LockMechanim : MonoBehaviour
                 if(GameManager.instance.RedKeys > 0)
                 {
                     GameManager.instance.RedKeys--;
+                    GameManager.instance.redKeysText.text = GameManager.instance.RedKeys.ToString();
                     lockAlreadyOpen = true;
                     return true;
                 }
@@ -73,6 +74,7 @@ public class LockMechanim : MonoBehaviour
                 if(GameManager.instance.GreenKeys > 0)
                 {
                     GameManager.instance.GreenKeys--;
+                    GameManager.instance.greenKeysText.text = GameManager.instance.GreenKeys.ToString();
                     lockAlreadyOpen = true;
                     return true;
                 }
@@ -82,6 +84,7 @@ public class LockMechanim : MonoBehaviour
                 if (GameManager.instance.GoldenKeys > 0)
                 {
                     GameManager.instance.GoldenKeys--;
+                    GameManager.instance.goldKeysText.text = GameManager.instance.GoldenKeys.ToString();
                     lockAlreadyOpen = true;
                     return true;
                 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,8 +11,10 @@ public class GameManager : MonoBehaviour
 
     // Game Manager Settings
     [SerializeField] int timeLeft = 100;
+
     // Game State
     private bool gamePaused;
+    private bool gameEnded;
 
     // Statistics
     private int points = 0;
@@ -20,6 +24,19 @@ public class GameManager : MonoBehaviour
     public AudioClip gamePausedClip;
     public AudioClip pickUpClip;
     public AudioClip loseClip;
+    public AudioClip winClip;
+
+    // UI
+    public Text diamondsText;
+    public Text redKeysText;
+    public Text greenKeysText;
+    public Text goldKeysText;
+    public Text timeText;
+
+    public GameObject endGamePanel;
+    public Text infoText;
+    public Text endGameText;
+
 
     private int redKeys = 0;
     public int RedKeys { get { return redKeys; } set { redKeys = value; } }
@@ -45,13 +62,21 @@ public class GameManager : MonoBehaviour
         InvokeRepeating(nameof(StopperTick), 3, 1);
     }
 
-    public void PlayClip(AudioClip clip)
-    {
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
     void Update()
     {
+        if(gameEnded)
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                Application.Quit();
+            }
+        }
+
         if(Input.GetButtonDown("Cancel"))
         {
             PlayClip(gamePausedClip);
@@ -72,10 +97,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+   
+
+    public void PlayClip(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
     void StopperTick()
     {
         timeLeft--;
-        //print("Time left: " + timeLeft);
+        timeText.text = timeLeft.ToString();
 
         if(timeLeft <= 0)
         {
@@ -83,12 +116,23 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
     }
+    public void WinGame()
+    {
+        CancelInvoke(nameof(StopperTick));
+        PlayClip(winClip);
+
+        endGamePanel.SetActive(true);
+        endGameText.text = "You Won!";
+        gameEnded = true;
+    }
 
     void EndGame()
     {
         CancelInvoke(nameof(StopperTick));
         PlayClip(loseClip);
-        Debug.Log("Game ended");
+
+        endGamePanel.SetActive(true);
+        gameEnded = true;
     }
 
     #region Pickups Helper Methods
@@ -96,12 +140,14 @@ public class GameManager : MonoBehaviour
     {
         PlayClip(pickUpClip);
         points += pointsToAdd;
+        diamondsText.text = points.ToString();
     }
 
     public void AddTime(int timeToAdd)
     {
         PlayClip(pickUpClip);
         timeLeft += timeToAdd;
+        timeText.text = timeLeft.ToString();
     }
 
     public void TimeFreeze(int time)
@@ -118,14 +164,17 @@ public class GameManager : MonoBehaviour
         {
             case KeyType.Red:
                 redKeys++;
+                redKeysText.text = redKeys.ToString();
                 break;
 
             case KeyType.Green:
                 greenKeys++;
+                greenKeysText.text = greenKeys.ToString();
                 break;
 
             case KeyType.Gold:
                 goldenKeys++;
+                goldKeysText.text = goldenKeys.ToString();
                 break;
         }
     }
